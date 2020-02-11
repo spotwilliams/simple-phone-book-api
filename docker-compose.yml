@@ -1,0 +1,65 @@
+version: '3'
+services:
+
+  #PHP Service
+  php:
+    build:
+      context: ./
+      dockerfile: docker/php/Dockerfile
+    image: digitalocean.com/php
+    container_name: php
+    tty: true
+    environment:
+      COMPOSE_PROJECT_NAME: app
+      SERVICE_NAME: php
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+    environment:
+      COMPOSE_PROJECT_NAME: app
+
+  #MySQL Service
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      COMPOSE_PROJECT_NAME: app
+      MYSQL_DATABASE: db
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: db
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local

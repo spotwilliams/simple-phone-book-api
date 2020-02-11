@@ -1,0 +1,22 @@
+{
+    "name": "spotwilliams/phonebook",
+    "description": "Simple Phone Book API",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Ricardo Vergara",
+            "email": "ricardovergarawork@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "doctrine/orm": "*",
+        "vlucas/phpdotenv": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhoneBook\\": "src/",
+            "App\\" : "app/"
+        }
+    }
+}
