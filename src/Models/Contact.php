@@ -14,12 +14,22 @@ class Contact
      * @GeneratedValue
      */
     private $id;
+    /**
+     * @Column(type="string")
+     */
     private $firstName;
+    /**
+     * @Column(type="string")
+     */
     private $surName;
+    /**
+     * One Contact has many phones
+     * @OneToMany(targetEntity="Phone", mappedBy="contact")
+     */
     private $phones;
     private $mails;
     /**
-     * Many contacts belogns to one phone book
+     * Many contacts belongs to one phone book
      * @ManyToOne(targetEntity="PhoneBook", inversedBy="contacts")
      * @JoinColumn(name="phone_book_id", referencedColumnName="id")
      */
