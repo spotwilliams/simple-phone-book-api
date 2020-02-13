@@ -4,9 +4,9 @@ namespace PhoneBook\Models;
 
 /**
  * @Entity
- * @Table(name="phones")
+ * @Table(name="emails")
  */
-class Phone
+class Email
 {
     /**
      * @Id
@@ -17,17 +17,17 @@ class Phone
     /**
      * @Column(type="string")
      */
-    private $number;
+    private $email;
     /**
-     * Many Phones belongs to one contact
-     * @ManyToOne(targetEntity="Contact", inversedBy="phones")
+     * Many Emails belongs to one contact
+     * @ManyToOne(targetEntity="Contact", inversedBy="emails")
      * @JoinColumn(name="contact_id", referencedColumnName="id")
      */
     private $contact;
 
-    public function __construct(string $number, Contact $contact)
+    public function __construct(string $email, Contact $contact)
     {
-        $this->number = $number;
+        $this->email = $email;
         $this->contact = $contact;
     }
 }

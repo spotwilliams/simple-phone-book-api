@@ -3,6 +3,7 @@
 namespace PhoneBook\Models;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhoneBook\Contracts\ContactPayload;
 use PhoneBook\Contracts\PhoneBookPayload;
 
 /**
@@ -26,5 +27,15 @@ class PhoneBook
     public function __construct(PhoneBookPayload $payload)
     {
         $this->contacts = new ArrayCollection();
+        foreach ($payload->contacts() as $contact) {
+            $this->contacts->add(new Contact($contact));
+        }
+    }
+
+    public function addContact(Contact $contact): PhoneBook
+    {
+        $this->contacts->add($contact);
+
+        return $this;
     }
 }
