@@ -26,3 +26,7 @@ $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
 
 $entityManager = EntityManager::create($dbParams, $config);
 
+// Nice exceptions
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();

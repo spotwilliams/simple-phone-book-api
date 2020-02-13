@@ -3,7 +3,6 @@
 namespace PhoneBook\Models;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PhoneBook\Contracts\ContactPayload;
 use PhoneBook\Contracts\PhoneBookPayload;
 
 /**
@@ -20,7 +19,7 @@ class PhoneBook
     private $id;
     /**
      * One PhoneBook has many contacts
-     * @OneToMany(targetEntity="Contact", mappedBy="phoneBook")
+     * @OneToMany(targetEntity="Contact", mappedBy="phoneBook", cascade={"persist", "remove"})
      */
     private $contacts;
 
@@ -28,7 +27,7 @@ class PhoneBook
     {
         $this->contacts = new ArrayCollection();
         foreach ($payload->contacts() as $contact) {
-            $this->contacts->add(new Contact($contact));
+            $this->contacts->add(new Contact($contact, $this));
         }
     }
 

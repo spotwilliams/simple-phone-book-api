@@ -27,12 +27,12 @@ class Contact
     private $surName;
     /**
      * One Contact has many phones
-     * @OneToMany(targetEntity="Phone", mappedBy="contact")
+     * @OneToMany(targetEntity="Phone", mappedBy="contact", cascade={"persist", "remove"})
      */
     private $phones;
     /**
      * One Contact has many mails
-     * @OneToMany(targetEntity="Email", mappedBy="contact")
+     * @OneToMany(targetEntity="Email", mappedBy="contact", cascade={"persist", "remove"})
      */
     private $emails;
     /**
@@ -42,7 +42,7 @@ class Contact
      */
     private $phoneBook;
 
-    public function __construct(ContactPayload $payload)
+    public function __construct(ContactPayload $payload, PhoneBook $phoneBook)
     {
         $this->emails = new ArrayCollection();
         $this->phones = new ArrayCollection();
@@ -55,6 +55,7 @@ class Contact
         foreach ($payload->phones() as $phone) {
             $this->phones->add(new Phone($phone, $this));
         }
+        $this->phoneBook = $phoneBook;
     }
 
     public function getId(): int

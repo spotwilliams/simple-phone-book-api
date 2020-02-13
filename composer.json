@@ -11,12 +11,16 @@
     "require": {
         "php": ">=7.2",
         "doctrine/orm": "*",
-        "vlucas/phpdotenv": "^4.1"
+        "vlucas/phpdotenv": "^4.1",
+        "filp/whoops": "^2.7"
     },
     "autoload": {
         "psr-4": {
             "PhoneBook\\": "src/",
             "App\\" : "app/"
         }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.0"
     }
 }
