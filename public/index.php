@@ -6,7 +6,7 @@ $payload = new class implements \PhoneBook\Contracts\PhoneBookPayload {
 
     public function id(): ?int
     {
-        return 1;
+        return 2;
     }
 
     public function contacts(): array
@@ -37,8 +37,35 @@ $payload = new class implements \PhoneBook\Contracts\PhoneBookPayload {
     }
 };
 
-$service = \App\Factories\CrudPhoneBookFactory::getService();
+$service = \App\Factories\CrudPhoneBookFactory::CreateOrFindPhoneBook();
 
-$phoneBook = $service->perform($payload);
+$phoneBook = $service->findPhoneBook($payload);
+
+
+$createContact = \App\Factories\CrudContactFactory::CreateContactService();
+
+$createContact->perform(new class implements \PhoneBook\Contracts\ContactPayload {
+    public function emails(): array
+    {
+        return ['1'];
+    }
+
+    public function phones(): array
+    {
+        return ['1'];
+    }
+
+    public function firstName(): string
+    {
+        return 'hola';
+    }
+
+    public function surName(): string
+    {
+        return 'chau';
+    }
+
+}, $phoneBook);
 
 dump($phoneBook);
+

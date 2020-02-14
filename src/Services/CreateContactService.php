@@ -7,7 +7,7 @@ use PhoneBook\Models\Contact;
 use PhoneBook\Models\PhoneBook;
 use PhoneBook\Repositories\PersistRepository;
 
-class CreateContact
+class CreateContactService
 {
     /** @var PersistRepository */
     private $persistRepository;
@@ -17,10 +17,14 @@ class CreateContact
         $this->persistRepository = $persistRepository;
     }
 
-    public function perform(ContactPayload $payload, PhoneBook $book)
+    public function perform(ContactPayload $payload, PhoneBook $book): Contact
     {
-        $book->addContact(new Contact($payload, $book));
+        $contact = new Contact($payload, $book);
 
-        $this->persistRepository->save($book);
+        $book->addContact($contact);
+
+       $this->persistRepository->save($contact);
+
+       return $contact;
     }
 }

@@ -3,7 +3,7 @@
 
 namespace PhoneBook\Services;
 
-class UpdateContact
+class UpdateContactService
 {
 
 }

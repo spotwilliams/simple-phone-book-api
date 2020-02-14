@@ -37,7 +37,7 @@ class Contact
     private $emails;
     /**
      * Many contacts belongs to one phone book
-     * @ManyToOne(targetEntity="PhoneBook", inversedBy="contacts")
+     * @ManyToOne(targetEntity="PhoneBook", inversedBy="contacts", cascade={"persist"})
      * @JoinColumn(name="phone_book_id", referencedColumnName="id")
      */
     private $phoneBook;
@@ -48,6 +48,8 @@ class Contact
         $this->phones = new ArrayCollection();
         $this->firstName = $payload->firstName();
         $this->surName = $payload->surName();
+        $this->phoneBook = $phoneBook;
+
         foreach ($payload->emails() as $email) {
             $this->emails->add(new Email($email, $this));
         }
@@ -55,7 +57,6 @@ class Contact
         foreach ($payload->phones() as $phone) {
             $this->phones->add(new Phone($phone, $this));
         }
-        $this->phoneBook = $phoneBook;
     }
 
     public function getId(): int

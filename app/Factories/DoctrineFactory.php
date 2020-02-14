@@ -35,7 +35,7 @@ class DoctrineFactory
         return new DoctrinePersistRepository(static::EntityManager());
     }
 
-    public static function ContactBookRepository(): DoctrineContactRepository
+    public static function ContactRepository(): DoctrineContactRepository
     {
         return new DoctrineContactRepository(static::EntityManager());
     }

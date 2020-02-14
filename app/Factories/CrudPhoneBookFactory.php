@@ -2,12 +2,12 @@
 
 namespace App\Factories;
 
-use PhoneBook\Services\CreateOrFindPhoneBook;
+use PhoneBook\Services\CreateOrFindPhoneBookService;
 
 class CrudPhoneBookFactory
 {
-    static function getService(): CreateOrFindPhoneBook
+    static function CreateOrFindPhoneBook(): CreateOrFindPhoneBookService
     {
-        return new CreateOrFindPhoneBook(DoctrineFactory::PersistRepository(), DoctrineFactory::PhoneBookRepository());
+        return new CreateOrFindPhoneBookService(DoctrineFactory::PersistRepository(), DoctrineFactory::PhoneBookRepository());
     }
 }

@@ -19,7 +19,7 @@ class PhoneBook
     private $id;
     /**
      * One PhoneBook has many contacts
-     * @OneToMany(targetEntity="Contact", mappedBy="phoneBook", cascade={"persist", "remove"})
+     * @OneToMany(targetEntity="Contact", mappedBy="phoneBook", cascade={"persist"})
      */
     private $contacts;
 
@@ -36,5 +36,10 @@ class PhoneBook
         $this->contacts->add($contact);
 
         return $this;
+    }
+
+    public function contacts(): array
+    {
+        return $this->contacts->toArray();
     }
 }

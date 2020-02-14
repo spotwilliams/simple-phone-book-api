@@ -6,7 +6,7 @@ namespace PhoneBook\Services;
 use PhoneBook\Repositories\ContactRepository;
 use PhoneBook\Repositories\PersistRepository;
 
-class RemoveContact
+class DeleteContactService
 {
     /** @var PersistRepository */
     private $persistRepository;
