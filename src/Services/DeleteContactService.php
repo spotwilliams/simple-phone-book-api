@@ -26,17 +26,4 @@ class DeleteContactService
         $this->persistRepository->remove($contact);
 
     }
-//    public function removeContact(Contact $contact)
-//    {
-//        /** @var Contact $value */
-//        foreach ($this->contacts as $key => $value) {
-//            if ($value->getId() === $contact->getId()) {
-//                $this->contacts->remove($key);
-//                break;
-//            }
-//        }
-//        $this->persistRepository->save($book);
-//
-//        return $this;
-//    }
 }
