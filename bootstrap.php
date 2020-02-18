@@ -1,7 +1,5 @@
 <?php
 
-require_once "vendor/autoload.php";
-
 // DotEnv's load
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -30,3 +28,10 @@ $entityManager = EntityManager::create($dbParams, $config);
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
+
+// DI
+$builder = new \DI\ContainerBuilder();
+$builder->addDefinitions(__DIR__ . '/app-config.php');
+
+dd($builder->build()->get(\PhoneBook\Repositories\PersistRepository::class));
+$app = \DI\Bridge\Slim\Bridge::create($builder->build());
