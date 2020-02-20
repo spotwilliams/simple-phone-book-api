@@ -4,6 +4,7 @@
 namespace PhoneBook\Services;
 
 use PhoneBook\Contracts\ContactPayload;
+use PhoneBook\Exceptions\ContactNotFound;
 use PhoneBook\Models\Contact;
 use PhoneBook\Repositories\ContactRepository;
 use PhoneBook\Repositories\PersistRepository;
@@ -12,7 +13,7 @@ class UpdateContactService
 {
     /** @var PersistRepository */
     private $persistRepository;
-    /** @var ContactRepository  */
+    /** @var ContactRepository */
     private $contactRepository;
 
     public function __construct(PersistRepository $persistRepository, ContactRepository $contactRepository)
@@ -23,16 +24,18 @@ class UpdateContactService
 
     public function perform(int $contactId, int $phoneBookId, ContactPayload $payload): Contact
     {
-        /** @var Contact $contact */
-        $contact = $this->contactRepository->findBy([
+        $contact = current($this->contactRepository->findBy([
             'id' => $contactId,
             'phoneBook' => $phoneBookId
-        ]);
+        ]));
 
-        $contact->update($payload);
+        if ($contact) {
+            $contact->update($payload);
+            $this->persistRepository->save($contact);
 
-        $this->persistRepository->save($contact);
+            return $contact;
+        }
 
-        return $contact;
+        throw new ContactNotFound();
     }
 }

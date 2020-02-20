@@ -5,36 +5,30 @@ namespace App\Handlers;
 use App\Requests\CreateContactRequest;
 use App\Transformers\ContactTransformer;
 use League\Fractal\Resource\Item;
-use PhoneBook\Models\PhoneBook;
+use PhoneBook\Repositories\PhoneBookRepository;
 use PhoneBook\Services\CreateContactService;
-use Psr\Http\Message\ResponseInterface as Response;
 
 class CreateContactHandler
 {
     const ROUTE = '/contacts';
     /** @var CreateContactService  */
     private $createContactService;
-    /** @var PhoneBook  */
-    private $phoneBook;
-    /** @var ContactTransformer */
-    private $transformer;
     /** @var ContactTransformer  */
     private $contactTransformer;
+    /** @var PhoneBookRepository */
+    private $bookRepository;
 
-    public function __construct(CreateContactService $createContactService, PhoneBook $phoneBook, ContactTransformer $contactTransformer)
+    public function __construct(CreateContactService $createContactService, ContactTransformer $contactTransformer, PhoneBookRepository $bookRepository)
     {
         $this->createContactService = $createContactService;
-        $this->phoneBook = $phoneBook;
         $this->contactTransformer = $contactTransformer;
-        dd($this);
+        $this->bookRepository = $bookRepository;
     }
 
-    public function __invoke(CreateContactRequest $request, Response $response)
+    public function __invoke(CreateContactRequest $request)
     {
-        $contact = $this->createContactService->perform($request, $this->phoneBook);;
+        $contact = $this->createContactService->perform($request, $this->bookRepository->find(1));
 
-        return $response->withStatus(200)
-            ->getBody()
-            ->write(new Item($contact, $this->transformer));
+        return new Item($contact, $this->contactTransformer);
     }
 }

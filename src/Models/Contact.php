@@ -46,9 +46,29 @@ class Contact
     {
         $this->emails = new ArrayCollection();
         $this->phones = new ArrayCollection();
+        $this->phoneBook = $phoneBook;
+        $this->syncData($payload);
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function update(ContactPayload $payload): Contact
+    {
+        $this->emails->clear();
+        $this->phones->clear();
+
+        $this->syncData($payload);
+
+        return $this;
+    }
+
+    private function syncData(ContactPayload $payload): void
+    {
         $this->firstName = $payload->firstName();
         $this->surName = $payload->surName();
-        $this->phoneBook = $phoneBook;
 
         foreach ($payload->emails() as $email) {
             $this->emails->add(new Email($email, $this));
@@ -57,10 +77,6 @@ class Contact
         foreach ($payload->phones() as $phone) {
             $this->phones->add(new Phone($phone, $this));
         }
-    }
 
-    public function getId(): int
-    {
-        return $this->id;
     }
 }

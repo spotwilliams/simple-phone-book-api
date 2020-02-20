@@ -4,8 +4,12 @@ namespace App\Requests;
 
 use PhoneBook\Contracts\ContactPayload;
 
-class CreateContactRequest extends Request implements ContactPayload
+class UpdateContactRequest extends Request implements ContactPayload
 {
+    public function id(): int
+    {
+        return $this->route('id');
+    }
     public function emails(): array
     {
         return $this->input('emails');
