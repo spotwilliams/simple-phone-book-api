@@ -21,4 +21,3 @@ $builder->writeProxiesToFile(true, __DIR__ . '/storage/proxies');
 
 $app = \DI\Bridge\Slim\Bridge::create($container = $builder->build());
 
-$responseManager = new \League\Fractal\Manager();

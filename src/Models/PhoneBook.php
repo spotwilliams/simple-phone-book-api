@@ -3,7 +3,6 @@
 namespace PhoneBook\Models;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PhoneBook\Contracts\PhoneBookPayload;
 
 /**
  * @Entity
@@ -22,13 +21,15 @@ class PhoneBook
      * @OneToMany(targetEntity="Contact", mappedBy="phoneBook", cascade={"persist"})
      */
     private $contacts;
+    /**
+     * @OneToOne(targetEntity="Owner",cascade={"persist"})
+     */
+    private $owner;
 
-    public function __construct(PhoneBookPayload $payload)
+    public function __construct(Owner $owner)
     {
         $this->contacts = new ArrayCollection();
-        foreach ($payload->contacts() as $contact) {
-            $this->contacts->add(new Contact($contact, $this));
-        }
+        $this->owner = $owner;
     }
 
     public function addContact(Contact $contact): PhoneBook
@@ -41,5 +42,10 @@ class PhoneBook
     public function contacts(): array
     {
         return $this->contacts->toArray();
+    }
+
+    public function owner(): Owner
+    {
+        return $this->owner;
     }
 }

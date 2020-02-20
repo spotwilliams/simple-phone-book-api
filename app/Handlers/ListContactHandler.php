@@ -2,14 +2,14 @@
 
 namespace App\Handlers;
 
-use App\Requests\ReadContactRequest;
 use App\Transformers\ContactTransformer;
 use League\Fractal\Resource\Collection;
 use PhoneBook\Repositories\ContactRepository;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
-class ReadContactHandler
+class ListContactHandler
 {
-    const ROUTE = '/contacts/{id}';
+    const ROUTE = '/contacts';
 
     /** @var ContactRepository */
     private $contactRepository;
@@ -22,9 +22,9 @@ class ReadContactHandler
         $this->contactTransformer = $contactTransformer;
     }
 
-    public function __invoke(ReadContactRequest $request)
+    public function __invoke(Request $request)
     {
-        $contacts = $this->contactRepository->find($request->id());
+        $contacts = $this->contactRepository->all();
 
         return new Collection($contacts, $this->contactTransformer);
     }

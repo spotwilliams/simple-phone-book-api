@@ -7,12 +7,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class JsonResponse
 {
-    public static function response(Response $response, $resource = null): Response
+    public static function response(Response $response, $resource, $status = 200): Response
     {
         $manager = new Manager();
 
         $response->getBody()->write($manager->createData($resource)->toJson());
 
-        return $response;
+        return $response->withStatus($status);
     }
 }
