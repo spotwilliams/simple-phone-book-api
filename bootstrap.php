@@ -21,3 +21,14 @@ $builder->writeProxiesToFile(true, __DIR__ . '/storage/proxies');
 
 $app = \DI\Bridge\Slim\Bridge::create($container = $builder->build());
 
+$isDevMode = (getenv('ENV') ?? 'prod') === 'dev';
+
+$errorMiddleware = $app->addErrorMiddleware($isDevMode, true, true);
+
+$errorMiddleware->setDefaultErrorHandler(new \App\Errors\ErrorHandler($app->getCallableResolver(), $app->getResponseFactory()));
+
+$errorHandler = $errorMiddleware->getDefaultErrorHandler();
+
+
+$errorHandler->setDefaultErrorRenderer('application/json', \App\Errors\ErrorRenderer::class);
+

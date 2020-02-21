@@ -3,7 +3,7 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use App\Requests\Request;
-use App\Http\JsonResponse;
+use App\Responses\JsonResponse;
 
 use App\Middleware\AuthorizationMiddleware;
 use App\Handlers\AuthorizeHandler;
