@@ -2,7 +2,6 @@
 
 namespace App\Requests;
 
-use App\Http\DataExtractor;
 use GuzzleHttp\Psr7\ServerRequest;
 use PhoneBook\Models\Owner;
 use Psr\Http\Message\RequestInterface;
@@ -10,7 +9,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class Request implements ServerRequestInterface
 {
-    use DataExtractor;
     use RequestDecorator;
 
     /** @var array  */

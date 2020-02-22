@@ -14,7 +14,7 @@ use App\Handlers\UpdateContactHandler;
 use App\Handlers\DeleteContactHandler;
 
 // Authorize
-$app->post(AuthorizeHandler::ROUTE, function (Request $request, Response $response, AuthorizeHandler $handler) {
+$app->post(AuthorizeHandler::ROUTE, function (\Psr\Http\Message\RequestInterface $request, Response $response, AuthorizeHandler $handler) {
     return JsonResponse::response($response, $handler($request));
 });
 

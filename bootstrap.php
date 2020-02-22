@@ -29,6 +29,5 @@ $errorMiddleware->setDefaultErrorHandler(new \App\Errors\ErrorHandler($app->getC
 
 $errorHandler = $errorMiddleware->getDefaultErrorHandler();
 
-
 $errorHandler->setDefaultErrorRenderer('application/json', \App\Errors\ErrorRenderer::class);
 

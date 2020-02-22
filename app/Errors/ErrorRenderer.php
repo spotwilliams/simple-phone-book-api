@@ -7,6 +7,8 @@ use Slim\Interfaces\ErrorRendererInterface;
 
 class ErrorRenderer implements ErrorRendererInterface
 {
+    use ErrorParser;
+
     /**
      * @param \Throwable | HttpNotFoundException $exception
      * @param bool       $displayErrorDetails
@@ -15,11 +17,6 @@ class ErrorRenderer implements ErrorRendererInterface
      */
     public function __invoke(\Throwable $exception, bool $displayErrorDetails): string
     {
-        $data = [
-            'code' => $exception->getCode(),
-            'message' => $exception->getMessage(),
-        ];
-
-        return json_encode($data);
+        return json_encode($this->parseError($exception));
     }
 }
