@@ -3,6 +3,7 @@
 
 namespace PhoneBook\Services;
 
+use PhoneBook\Models\PhoneBook;
 use PhoneBook\Repositories\ContactRepository;
 use PhoneBook\Repositories\PersistRepository;
 
@@ -19,9 +20,9 @@ class DeleteContactService
         $this->contactRepository = $contactRepository;
     }
 
-    public function perform(int $id): void
+    public function perform(int $id, PhoneBook $phoneBook): void
     {
-        $contact = $this->contactRepository->get($id);
+        $contact = $this->contactRepository->findInPhoneBook($id, $phoneBook);
 
         $this->persistRepository->remove($contact);
 

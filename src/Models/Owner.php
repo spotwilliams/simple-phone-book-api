@@ -2,6 +2,11 @@
 
 namespace PhoneBook\Models;
 
+/**
+ * @Entity
+ * @Table(name="owners")
+ */
+
 class Owner
 {
     /**
@@ -30,5 +35,8 @@ class Owner
         return $this->accessToken;
     }
 
-
+    public function __toString()
+    {
+        return "$this->id";
+    }
 }

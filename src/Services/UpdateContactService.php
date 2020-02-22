@@ -6,6 +6,7 @@ namespace PhoneBook\Services;
 use PhoneBook\Contracts\ContactPayload;
 use PhoneBook\Exceptions\ContactNotFound;
 use PhoneBook\Models\Contact;
+use PhoneBook\Models\PhoneBook;
 use PhoneBook\Repositories\ContactRepository;
 use PhoneBook\Repositories\PersistRepository;
 
@@ -22,12 +23,9 @@ class UpdateContactService
         $this->contactRepository = $contactRepository;
     }
 
-    public function perform(int $contactId, int $phoneBookId, ContactPayload $payload): Contact
+    public function perform(int $id, PhoneBook $phoneBook, ContactPayload $payload): Contact
     {
-        $contact = current($this->contactRepository->findBy([
-            'id' => $contactId,
-            'phoneBook' => $phoneBookId
-        ]));
+        $contact = $this->contactRepository->findInPhoneBook($id, $phoneBook);
 
         if ($contact) {
             $contact->update($payload);

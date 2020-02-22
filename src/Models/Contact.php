@@ -27,12 +27,12 @@ class Contact
     private $surName;
     /**
      * One Contact has many phones
-     * @OneToMany(targetEntity="Phone", mappedBy="contact", cascade={"persist", "remove"})
+     * @OneToMany(targetEntity="Phone", mappedBy="contact", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $phones;
     /**
      * One Contact has many mails
-     * @OneToMany(targetEntity="Email", mappedBy="contact", cascade={"persist", "remove"})
+     * @OneToMany(targetEntity="Email", mappedBy="contact", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $emails;
     /**
@@ -64,6 +64,27 @@ class Contact
 
         return $this;
     }
+
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    public function getSurName()
+    {
+        return $this->surName;
+    }
+
+    public function getPhones(): array
+    {
+        return $this->phones->toArray();
+    }
+
+    public function getEmails(): array
+    {
+        return $this->emails->toArray();
+    }
+
 
     private function syncData(ContactPayload $payload): void
     {

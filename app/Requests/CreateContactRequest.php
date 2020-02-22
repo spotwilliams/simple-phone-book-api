@@ -4,8 +4,18 @@ namespace App\Requests;
 
 use PhoneBook\Contracts\ContactPayload;
 
-class CreateContactRequest extends Request implements ContactPayload
+class CreateContactRequest implements ContactPayload
 {
+    use RequestAccessor;
+
+    /** @var Request  */
+    private $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     public function emails(): array
     {
         return $this->input('emails');

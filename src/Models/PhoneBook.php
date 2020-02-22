@@ -32,6 +32,11 @@ class PhoneBook
         $this->owner = $owner;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function addContact(Contact $contact): PhoneBook
     {
         $this->contacts->add($contact);
@@ -47,5 +52,9 @@ class PhoneBook
     public function owner(): Owner
     {
         return $this->owner;
+    }
+    public function __toString()
+    {
+        return "$this->id";
     }
 }

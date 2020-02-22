@@ -30,4 +30,9 @@ class Phone
         $this->number = $number;
         $this->contact = $contact;
     }
+
+    public function getNumber(): string
+    {
+        return $this->number;
+    }
 }

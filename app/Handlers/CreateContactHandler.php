@@ -27,7 +27,9 @@ class CreateContactHandler
 
     public function __invoke(CreateContactRequest $request)
     {
-        $contact = $this->createContactService->perform($request, $this->bookRepository->find(1));
+        $phoneBook = $this->bookRepository->findByOwner($request->owner());
+
+        $contact = $this->createContactService->perform($request, $phoneBook);
 
         return new Item($contact, $this->contactTransformer);
     }

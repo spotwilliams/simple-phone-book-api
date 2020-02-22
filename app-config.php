@@ -6,11 +6,13 @@ use Psr\Container\ContainerInterface;
 // Business
 use PhoneBook\Repositories\ContactRepository;
 use PhoneBook\Repositories\PersistRepository;
+use PhoneBook\Repositories\OwnerRepository;
 use PhoneBook\Repositories\PhoneBookRepository;
 
 // Implementations
 use App\Infrastructure\Database\DoctrineContactRepository;
 use App\Infrastructure\Database\DoctrinePersistRepository;
+use App\Infrastructure\Database\DoctrineOwnerRepository;
 use App\Infrastructure\Database\DoctrinePhoneBookRepository;
 
 return [
@@ -25,5 +27,8 @@ return [
     },
     PhoneBookRepository::class => function (ContainerInterface $container) {
         return new DoctrinePhoneBookRepository($container->get('entity-manager'));
+    },
+    OwnerRepository::class => function (ContainerInterface $container) {
+        return new DoctrineOwnerRepository($container->get('entity-manager'));
     },
 ];

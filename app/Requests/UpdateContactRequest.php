@@ -4,8 +4,18 @@ namespace App\Requests;
 
 use PhoneBook\Contracts\ContactPayload;
 
-class UpdateContactRequest extends Request implements ContactPayload
+class UpdateContactRequest implements ContactPayload
 {
+    use RequestAccessor;
+
+    /** @var Request  */
+    private $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     public function id(): int
     {
         return $this->route('id');

@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestInterface;
 
 class AuthorizeHandler
 {
-    const ROUTE = 'authorize';
+    const ROUTE = '/authorize';
 
     /** @var AuthorizeAccessToPhoneBookService */
     private $accessToPhoneBookService;

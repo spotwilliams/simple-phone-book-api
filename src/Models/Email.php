@@ -30,4 +30,9 @@ class Email
         $this->email = $email;
         $this->contact = $contact;
     }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
 }
