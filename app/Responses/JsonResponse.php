@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http;
+namespace App\Responses;
 
 use League\Fractal\Manager;
 use Psr\Http\Message\ResponseInterface as Response;

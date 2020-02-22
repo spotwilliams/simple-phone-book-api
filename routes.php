@@ -3,7 +3,7 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use App\Requests\Request;
-use App\Http\JsonResponse;
+use App\Responses\JsonResponse;
 
 use App\Middleware\AuthorizationMiddleware;
 use App\Handlers\AuthorizeHandler;
@@ -14,7 +14,7 @@ use App\Handlers\UpdateContactHandler;
 use App\Handlers\DeleteContactHandler;
 
 // Authorize
-$app->post(AuthorizeHandler::ROUTE, function (Request $request, Response $response, AuthorizeHandler $handler) {
+$app->post(AuthorizeHandler::ROUTE, function (\Psr\Http\Message\RequestInterface $request, Response $response, AuthorizeHandler $handler) {
     return JsonResponse::response($response, $handler($request));
 });
 
