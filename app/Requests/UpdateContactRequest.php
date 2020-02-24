@@ -3,6 +3,7 @@
 namespace App\Requests;
 
 use PhoneBook\Contracts\ContactPayload;
+use Respect\Validation\Validator;
 
 class UpdateContactRequest implements ContactPayload
 {
@@ -14,6 +15,7 @@ class UpdateContactRequest implements ContactPayload
     public function __construct(Request $request)
     {
         $this->request = $request;
+        $this->validate();
     }
 
     public function id(): int
@@ -38,5 +40,13 @@ class UpdateContactRequest implements ContactPayload
     public function surName(): string
     {
         return $this->input('surName');
+    }
+
+    private function validate()
+    {
+        Validator::notOptional()->check($this->firstName());
+        Validator::notOptional()->check($this->surName());
+        Validator::arrayVal()->each(Validator::email())->check($this->emails());
+        Validator::arrayVal()->each(Validator::phone())->check($this->phones());
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Errors;
 
 use Doctrine\ORM\EntityNotFoundException;
+use Respect\Validation\Exceptions\ValidationException;
 
 trait  ErrorParser
 {
@@ -13,6 +14,13 @@ trait  ErrorParser
                 return [
                     'code' => 404,
                     'message' => 'cant find contact',
+                ];
+            }
+            case ($throwable instanceof ValidationException): {
+                return [
+                    'code' => 400,
+                    'message' => 'validation fails',
+                    'details' => $throwable->getMessage(),
                 ];
             }
             default: {
