@@ -29,7 +29,9 @@ class UpdateContactService
 
         if ($contact) {
             $contact->update($payload);
-            $this->persistRepository->save($contact);
+            $this->persistRepository->transactional(function ($em) use ($contact) {
+                $this->persistRepository->save($contact);
+            });
 
             return $contact;
         }

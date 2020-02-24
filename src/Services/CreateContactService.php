@@ -23,7 +23,9 @@ class CreateContactService
 
         $book->addContact($contact);
 
-       $this->persistRepository->save($contact);
+       $this->persistRepository->transactional(function ($em) use ($contact) {
+           $this->persistRepository->save($contact);
+       });
 
        return $contact;
     }

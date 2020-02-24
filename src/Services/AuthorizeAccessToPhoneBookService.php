@@ -36,7 +36,10 @@ class AuthorizeAccessToPhoneBookService
         $book = $this->phoneBookRepository->findOneBy(['owner' => $owner]);
 
         if (!$book) {
-            $book = $this->persistRepository->save(new PhoneBook($owner));
+            $book = new PhoneBook($owner);
+            $this->persistRepository->transactional(function ($em) use ($book) {
+                $this->persistRepository->save($book);
+            });
         }
 
         return $book;
