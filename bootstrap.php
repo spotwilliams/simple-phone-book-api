@@ -25,7 +25,7 @@ $isDevMode = (getenv('ENV') ?? 'prod') === 'dev';
 
 $errorMiddleware = $app->addErrorMiddleware($isDevMode, true, true);
 
-$errorMiddleware->setDefaultErrorHandler(new \App\Errors\ErrorHandler($app->getCallableResolver(), $app->getResponseFactory()));
+$errorMiddleware->setDefaultErrorHandler(new \App\Errors\ErrorHandler($app->getCallableResolver(), $app->getResponseFactory(), $app->getContainer()->get(\Psr\Log\LoggerInterface::class)));
 
 $errorHandler = $errorMiddleware->getDefaultErrorHandler();
 
